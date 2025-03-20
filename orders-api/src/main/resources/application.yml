@@ -1,0 +1,21 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/orders_db}
+    username: ${SPRING_DATASOURCE_USERNAME:app_order_user_db}
+    password: ${SPRING_DATASOURCE_PASSWORD:Admin-Order%123}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+external-services:
+  products-api: ${EXTERNAL_SERVICES_PRODUCTS_API:http://localhost:8081/api/products}
+  payment-api: ${EXTERNAL_SERVICES_PAYMENT_API:http://localhost:8083/api/payments}
+logging:
+  level:
+    com.rafaelgalvezg.orders: INFO

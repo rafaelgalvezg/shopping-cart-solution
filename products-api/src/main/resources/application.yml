@@ -1,0 +1,9 @@
+server:
+  port: 8081
+fake-store-api:
+  base-url: "https://fakestoreapi.com"
+  endpoints:
+    products: "/products"
+logging:
+  level:
+    com.rafaelgalvezg.products: INFO

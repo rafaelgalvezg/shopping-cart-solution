@@ -1,0 +1,5 @@
+rootProject.name = 'shopping-cart-solution'
+include 'products-api'
+include 'orders-api'
+include 'payment-api'
+
