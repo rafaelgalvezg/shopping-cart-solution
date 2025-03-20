@@ -1,0 +1,77 @@
+services:
+  products-api:
+    build:
+      context: ./products-api
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - shopping-net
+
+  orders-api:
+    build:
+      context: ./orders-api
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres-orders
+      - products-api
+      - payment-api
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-orders:5432/orders_db
+      - SPRING_DATASOURCE_USERNAME=app_order_user_db
+      - SPRING_DATASOURCE_PASSWORD=Admin-Order%123
+      - EXTERNAL_SERVICES_PRODUCTS_API=http://products-api:8081/api/products
+      - EXTERNAL_SERVICES_PAYMENT_API=http://payment-api:8083/api/payments
+    networks:
+      - shopping-net
+
+  payment-api:
+    build:
+      context: ./payment-api
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres-payments
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-payments:5432/payments_db
+      - SPRING_DATASOURCE_USERNAME=app_payment_user_db
+      - SPRING_DATASOURCE_PASSWORD=Admin-Payment%123
+    networks:
+      - shopping-net
+
+  postgres-orders:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=app_order_user_db
+      - POSTGRES_PASSWORD=Admin-Order%123
+      - POSTGRES_DB=orders_db
+    volumes:
+      - postgres-orders-data:/var/lib/postgresql/data
+    networks:
+      - shopping-net
+
+  postgres-payments:
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=app_payment_user_db
+      - POSTGRES_PASSWORD=Admin-Payment%123
+      - POSTGRES_DB=payments_db
+    volumes:
+      - postgres-payments-data:/var/lib/postgresql/data
+    networks:
+      - shopping-net
+
+networks:
+  shopping-net:
+    driver: bridge
+
+volumes:
+  postgres-orders-data:
+  postgres-payments-data:
