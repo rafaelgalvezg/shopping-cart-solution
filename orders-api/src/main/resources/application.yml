@@ -3,8 +3,8 @@ server:
 spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/orders_db}
-    username: ${SPRING_DATASOURCE_USERNAME:app_order_user_db}
-    password: ${SPRING_DATASOURCE_PASSWORD:Admin-Order%123}
+    username: ${SPRING_DATASOURCE_USERNAME:user-app-order-db}
+    password: ${SPRING_DATASOURCE_PASSWORD:Admin-Order%321}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

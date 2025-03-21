@@ -1,10 +1,10 @@
 plugins {
-    id 'org.springframework.boot' version '3.4.3' apply false
+    id 'org.springframework.boot' version '3.3.4' apply false
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.rafaelgalvezg'
-version = '0.0.1'
+version = '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -16,6 +16,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
     group = 'com.rafaelgalvezg'
+    version = '0.0.1-SNAPSHOT'
 
     java {
         toolchain {

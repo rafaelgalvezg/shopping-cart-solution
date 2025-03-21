@@ -3,8 +3,8 @@ server:
 spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/payments_db}
-    username: ${SPRING_DATASOURCE_USERNAME:app_payment_user_db}
-    password: ${SPRING_DATASOURCE_PASSWORD:Admin-Payment%123}
+    username: ${SPRING_DATASOURCE_USERNAME:user-app-payment-db}
+    password: ${SPRING_DATASOURCE_PASSWORD:Admin-Payment%321}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

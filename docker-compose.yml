@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   products-api:
     build:
@@ -20,8 +21,8 @@ services:
       - payment-api
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-orders:5432/orders_db
-      - SPRING_DATASOURCE_USERNAME=app_order_user_db
-      - SPRING_DATASOURCE_PASSWORD=Admin-Order%123
+      - SPRING_DATASOURCE_USERNAME=user-app-order-db
+      - SPRING_DATASOURCE_PASSWORD=Admin-Order%321
       - EXTERNAL_SERVICES_PRODUCTS_API=http://products-api:8081/api/products
       - EXTERNAL_SERVICES_PAYMENT_API=http://payment-api:8083/api/payments
     networks:
@@ -37,8 +38,8 @@ services:
       - postgres-payments
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-payments:5432/payments_db
-      - SPRING_DATASOURCE_USERNAME=app_payment_user_db
-      - SPRING_DATASOURCE_PASSWORD=Admin-Payment%123
+      - SPRING_DATASOURCE_USERNAME=user-app-payment-db
+      - SPRING_DATASOURCE_PASSWORD=Admin-Payment%321
     networks:
       - shopping-net
 
@@ -47,8 +48,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=app_order_user_db
-      - POSTGRES_PASSWORD=Admin-Order%123
+      - POSTGRES_USER=user-app-order-db
+      - POSTGRES_PASSWORD=Admin-Order%321
       - POSTGRES_DB=orders_db
     volumes:
       - postgres-orders-data:/var/lib/postgresql/data
@@ -60,8 +61,8 @@ services:
     ports:
       - "5433:5432"
     environment:
-      - POSTGRES_USER=app_payment_user_db
-      - POSTGRES_PASSWORD=Admin-Payment%123
+      - POSTGRES_USER=user-app-payment-db
+      - POSTGRES_PASSWORD=Admin-Payment%321
       - POSTGRES_DB=payments_db
     volumes:
       - postgres-payments-data:/var/lib/postgresql/data
