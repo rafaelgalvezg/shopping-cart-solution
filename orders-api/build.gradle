@@ -1,9 +1,55 @@
+plugins{
+    id 'jacoco'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
     implementation 'org.postgresql:postgresql'
+    implementation 'org.jacoco:org.jacoco.core:0.8.12'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+    reportsDirectory = layout.buildDirectory.dir('reports/jacoco')
+}
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+test {
+    useJUnitPlatform()
+}
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+        xml.required = false
+        csv.required = false
+        html.required = true
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, include: ['com/rafaelgalvezg/orders/service/impl/**/*.class'])
+        }))
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.8
+            }
+        }
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, include: ['**/com/rafaelgalvezg/orders/service/impl/**'])
+        }))
+    }
 }
